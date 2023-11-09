@@ -1,0 +1,47 @@
+CREATE TABLE users(
+	userID int PRIMARY KEY AUTO_INCREMENT,
+    username varchar(50),
+    password varchar(50),
+	phone_number varchar(20)
+);
+CREATE TABLE genre (
+	genreID int PRIMARY KEY AUTO_INCREMENT,
+    genre varchar(50)
+);
+CREATE TABLE actor (
+	actorID int PRIMARY KEY AUTO_INCREMENT,
+    actorName varchar(50),
+    age int,
+    gender boolean,
+    avt varchar(100),
+    description varchar(200)
+);
+CREATE TABLE writer (
+	writerID int PRIMARY KEY AUTO_INCREMENT,
+    writerName varchar(50),
+    age int,
+    gender boolean,
+    avt varchar(100),
+    description varchar(200)
+);
+CREATE TABLE director (
+	directorID int PRIMARY KEY AUTO_INCREMENT,
+    directorName varchar(50),
+    age int,
+    gender boolean,
+    avt varchar(100),
+    description varchar(200)
+);
+CREATE TABLE movie(
+	movieID int PRIMARY KEY AUTO_INCREMENT,
+    title varchar(100),
+    year varchar(50),
+	rated double,
+    released varchar(50),
+    language varchar(40),
+    country varchar(40),
+    genreID int,
+    productionID int,
+    description varchar(300),
+    poster varchar(100)
+);
