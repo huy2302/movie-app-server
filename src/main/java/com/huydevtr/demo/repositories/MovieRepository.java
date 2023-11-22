@@ -1,10 +1,10 @@
 package com.huydevtr.demo.repositories;
 
-import com.huydevtr.demo.models.Product;
+import com.huydevtr.demo.models.entities.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 //@Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
 }
