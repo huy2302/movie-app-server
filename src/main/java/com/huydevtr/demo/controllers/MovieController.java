@@ -18,21 +18,13 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "api")
 public class MovieController {
     @Autowired
-    private ProductService productService;
-    @Autowired
     private MovieService movieService;
-    @Autowired
-    private MovieActorService movieActorService;
+
     @Autowired
     private MovieToMovieDTO movieToMovieDTO;
     @Autowired
     MovieMapper movieMapper;
-    @GetMapping("/mov")
-    public ResponseEntity<List<MovieActor>> movieActors () {
-        List<MovieActor> actors = movieActorService.findAll();
 
-        return new ResponseEntity<>(actors, HttpStatus.OK);
-    }
 //    @GetMapping("/movie/{id}")
 //    public ResponseEntity<MovieDTO> getMovieDetails (
 //            @PathVariable(value = "id") int id
