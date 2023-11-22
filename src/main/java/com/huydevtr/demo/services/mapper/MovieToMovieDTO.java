@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieToMovieDTO implements Function<Movie, MovieDTO> {
@@ -39,7 +40,9 @@ public class MovieToMovieDTO implements Function<Movie, MovieDTO> {
                 movie.getRated(),
                 movie.getReleased(),
                 movie.getRuntime(),
-                getListActorByMovieID(movie.getMovieID()),
+                movie.getDirectorList().stream().map(director -> director.getDirectorName()).collect(Collectors.toList()),
+                movie.getWriterList().stream().map(writer -> writer.getWriterName()).collect(Collectors.toList()),
+                movie.getActorList().stream().map(actor -> actor.getActorName()).collect(Collectors.toList()),
                 movie.getDescription(),
                 movie.getLanguage(),
                 movie.getCountry(),

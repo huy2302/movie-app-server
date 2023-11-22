@@ -25,9 +25,9 @@ public class MovieDTO {
     @JsonProperty("Genre")
     private String Genre;
     @JsonProperty("Directors")
-    private ArrayList<Director> Directors;
+    private List<String> Directors;
     @JsonProperty("Writers")
-    private ArrayList<Writer> Writers;
+    private List<String> Writers;
     @JsonProperty("Actors")
     private List<String> Actors;
     @JsonProperty("Description")
@@ -40,20 +40,19 @@ public class MovieDTO {
     private String Awards;
     @JsonProperty("Poster")
     private String Poster;
-//    @JsonProperty("Images")
-//    private int Images;
-
 
     public MovieDTO() {
     }
 
-    public MovieDTO(int movieID, String title, String year, double rated, String released, int runtime, List<String> actors, String description, String language, String country, String awards, String poster) {
+    public MovieDTO(int movieID, String title, String year, double rated, String released, int runtime, List<String> directors, List<String> writers, List<String> actors, String description, String language, String country, String awards, String poster) {
         MovieID = movieID;
         Title = title;
         Year = year;
         Rated = rated;
         Released = released;
         Runtime = runtime;
+        Directors = directors;
+        Writers = writers;
         Actors = actors;
         Description = description;
         Language = language;

@@ -3,6 +3,7 @@ package com.huydevtr.demo.models.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +19,27 @@ public class Movie {
     private String year; // năm
     @Column(name = "rated")
     private double rated; // số điểm đánh giá
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "movie_director",
+            joinColumns = @JoinColumn(name = "movieID", referencedColumnName = "movieID"),
+            inverseJoinColumns = @JoinColumn(name = "directorID", referencedColumnName = "directorID")
+    )
+    private List<Director> directorList;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "movie_actor",
+            joinColumns = @JoinColumn(name = "movieID", referencedColumnName = "movieID"),
+            inverseJoinColumns = @JoinColumn(name = "actorID", referencedColumnName = "actorID")
+    )
+    private List<Actor> actorList;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "movie_writer",
+            joinColumns = @JoinColumn(name = "movieID", referencedColumnName = "movieID"),
+            inverseJoinColumns = @JoinColumn(name = "writerID", referencedColumnName = "writerID")
+    )
+    private List<Writer> writerList;
     @Column(name = "released")
     private String released; // ngày ra mắt
     @Column(name = "runtime")
@@ -36,11 +58,12 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(int movieID, String title, String year, double rated, String released, int runtime, String language, String country, String awards, String description, String poster) {
+    public Movie(int movieID, String title, String year, double rated, List<Director> directorList, String released, int runtime, String language, String country, String awards, String description, String poster) {
         this.movieID = movieID;
         this.title = title;
         this.year = year;
         this.rated = rated;
+        this.directorList = directorList;
         this.released = released;
         this.runtime = runtime;
         this.language = language;

@@ -3,6 +3,7 @@ package com.huydevtr.demo.models.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,6 +23,8 @@ public class Actor {
     private String Gender; // giới tính
     @Column(name = "avt")
     private String Avt; // link avt
+    @ManyToMany(mappedBy = "actorList", fetch = FetchType.LAZY)
+    private List<Movie> movieList;
     @Column(name = "description")
     private String Description; // mô tả
 
