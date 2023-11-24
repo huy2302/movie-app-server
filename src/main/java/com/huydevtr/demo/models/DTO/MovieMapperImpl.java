@@ -84,7 +84,7 @@ public class MovieMapperImpl implements MovieMapper{
         movieDTO.setReleased(movie.getReleased());
         movieDTO.setRuntime(movie.getRuntime());
 //        movieDetails.setGenre(movie.getGenre());
-        movieDTO.setDescription(movie.getDescription());
+        movieDTO.setPlot(movie.getDescription());
         movieDTO.setLanguage(movie.getLanguage());
         movieDTO.setCountry(movie.getCountry());
         movieDTO.setAwards(movie.getAwards());

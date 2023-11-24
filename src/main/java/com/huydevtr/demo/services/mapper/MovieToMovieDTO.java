@@ -40,6 +40,7 @@ public class MovieToMovieDTO implements Function<Movie, MovieDTO> {
                 movie.getRated(),
                 movie.getReleased(),
                 movie.getRuntime(),
+                movie.getGenreList().stream().map(genre -> genre.getGenre()).collect(Collectors.toList()),
                 movie.getDirectorList().stream().map(director -> director.getDirectorName()).collect(Collectors.toList()),
                 movie.getWriterList().stream().map(writer -> writer.getWriterName()).collect(Collectors.toList()),
                 movie.getActorList().stream().map(actor -> actor.getActorName()).collect(Collectors.toList()),

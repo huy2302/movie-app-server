@@ -3,6 +3,7 @@ package com.huydevtr.demo.models.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,7 +15,8 @@ public class Genre {
     private int GenreID;
     @Column(name = "genre")
     private String Genre; // tên thể loại
-
+    @ManyToMany(mappedBy = "genreList", fetch = FetchType.LAZY)
+    private List<Movie> movieList;
     public Genre() {
     }
 

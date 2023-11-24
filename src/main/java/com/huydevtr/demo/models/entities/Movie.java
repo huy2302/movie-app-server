@@ -40,6 +40,13 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "writerID", referencedColumnName = "writerID")
     )
     private List<Writer> writerList;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movieID", referencedColumnName = "movieID"),
+            inverseJoinColumns = @JoinColumn(name = "genreID", referencedColumnName = "genreID")
+    )
+    private List<Genre> genreList;
     @Column(name = "released")
     private String released; // ngày ra mắt
     @Column(name = "runtime")
@@ -64,6 +71,24 @@ public class Movie {
         this.year = year;
         this.rated = rated;
         this.directorList = directorList;
+        this.released = released;
+        this.runtime = runtime;
+        this.language = language;
+        this.country = country;
+        this.awards = awards;
+        this.description = description;
+        this.poster = poster;
+    }
+
+    public Movie(int movieID, String title, String year, double rated, List<Director> directorList, List<Actor> actorList, List<Writer> writerList, List<Genre> genreList, String released, int runtime, String language, String country, String awards, String description, String poster) {
+        this.movieID = movieID;
+        this.title = title;
+        this.year = year;
+        this.rated = rated;
+        this.directorList = directorList;
+        this.actorList = actorList;
+        this.writerList = writerList;
+        this.genreList = genreList;
         this.released = released;
         this.runtime = runtime;
         this.language = language;
