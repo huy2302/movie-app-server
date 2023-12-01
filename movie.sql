@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 17, 2023 lúc 04:54 PM
+-- Thời gian đã tạo: Th12 01, 2023 lúc 07:34 AM
 -- Phiên bản máy phục vụ: 10.4.25-MariaDB
 -- Phiên bản PHP: 8.1.10
 
@@ -115,7 +115,7 @@ CREATE TABLE `movie` (
 --
 
 INSERT INTO `movie` (`movieID`, `title`, `year`, `rated`, `released`, `runtime`, `language`, `country`, `awards`, `description`, `poster`) VALUES
-(1, 'Avengers: Endgame', '2019', 8.5, '26 Apr 2019', 160, 'English', 'USA', '', 'After the devastating events of Avengers: Infinity War(2018), the unity of remaning allies, the Avengers assenble once more in order to undo Thanos action universe', 'https://m.media-amazon.com/images/M/ashdjkahsdkjahsdkjahsd'),
+(1, 'Avengers: Endgame', '2019', 8.5, '26 Apr 2019', 160, 'English', 'USA', '21 nominations.', 'After the devastating events of Avengers: Infinity War(2018), the unity of remaning allies, the Avengers assenble once more in order to undo Thanos action universe', 'https://m.media-amazon.com/images/M/ashdjkahsdkjahsdkjahsd'),
 (2, 'I Am Legend', '2007', 8.2, '14 Dec 2007', 150, 'Spain', 'USA', '9 wins & 21 nominations.', 'Years after a plague kills most of humanity and transforms the rest into monsters, the sole survivor in New York City struggles valiantly to find a cure.', 'http://ia.media-imdb.com/images/M/MV5BMTU4NzMyNDk1OV5BMl5BanBnXkFtZTcwOTEwMzU1MQ@@._V1_SX300.jpg');
 
 -- --------------------------------------------------------
@@ -156,6 +156,27 @@ CREATE TABLE `movie_director` (
 --
 
 INSERT INTO `movie_director` (`movieID`, `directorID`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `movie_genre`
+--
+
+CREATE TABLE `movie_genre` (
+  `movieID` int(11) NOT NULL,
+  `genreID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `movie_genre`
+--
+
+INSERT INTO `movie_genre` (`movieID`, `genreID`) VALUES
 (1, 1),
 (1, 2),
 (2, 1),
@@ -315,6 +336,13 @@ ALTER TABLE `movie_director`
   ADD KEY `directorID` (`directorID`);
 
 --
+-- Chỉ mục cho bảng `movie_genre`
+--
+ALTER TABLE `movie_genre`
+  ADD PRIMARY KEY (`movieID`,`genreID`),
+  ADD KEY `genreID` (`genreID`);
+
+--
 -- Chỉ mục cho bảng `movie_production`
 --
 ALTER TABLE `movie_production`
@@ -415,6 +443,13 @@ ALTER TABLE `movie_actor`
 ALTER TABLE `movie_director`
   ADD CONSTRAINT `movie_director_ibfk_1` FOREIGN KEY (`movieID`) REFERENCES `movie` (`movieID`),
   ADD CONSTRAINT `movie_director_ibfk_2` FOREIGN KEY (`directorID`) REFERENCES `director` (`directorID`);
+
+--
+-- Các ràng buộc cho bảng `movie_genre`
+--
+ALTER TABLE `movie_genre`
+  ADD CONSTRAINT `movie_genre_ibfk_1` FOREIGN KEY (`movieID`) REFERENCES `movie` (`movieID`),
+  ADD CONSTRAINT `movie_genre_ibfk_2` FOREIGN KEY (`genreID`) REFERENCES `genre` (`genreID`);
 
 --
 -- Các ràng buộc cho bảng `movie_production`
