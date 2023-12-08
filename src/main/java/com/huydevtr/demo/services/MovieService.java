@@ -34,4 +34,15 @@ public class MovieService {
 
         return movie;
     }
+
+    public String createMovie (Movie movie) {
+        Optional<Movie> existingMovieId = movieRepository.findByMovieId(movie.getMovieID());
+        Optional<Movie> existingMovieTitle = movieRepository.findByTitle(movie.getTitle());
+
+        if (existingMovieId.isPresent() || existingMovieTitle.isPresent()) {
+            return "Movie with title '" + movie.getTitle() + "' already exists!";
+        }
+//        movieRepository.save(movie);
+        return "Save movie successfully!";
+    }
 }

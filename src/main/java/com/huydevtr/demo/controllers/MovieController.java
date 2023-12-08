@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,20 +37,6 @@ public class MovieController {
     private GenreService genreService;
     @Autowired
     private GenreToGenreDTO genreToGenreDTO;
-    @Autowired
-    MovieMapper movieMapper;
-
-//    @GetMapping("/movie/{id}")
-//    public ResponseEntity<MovieDTO> getMovieDetails (
-//            @PathVariable(value = "id") int id
-//    ) {
-//        return new ResponseEntity<>(
-//                movieMapper.movieToMovieDetails(
-//                    movieService.findByID(id)
-//                ),
-//                HttpStatus.OK
-//        );
-//    }
     // get phim chi tiết
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDTO> getMovieDetails (
@@ -86,6 +73,17 @@ public class MovieController {
         return new ResponseEntity<>(
                 genreDTOS,
                 HttpStatus.OK
+        );
+    }
+    @PostMapping(
+            value = "/movie/create",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> createMovie (@RequestBody Movie movie) {
+        String abc = movieService.createMovie(movie);
+        return new ResponseEntity<>(
+                abc,
+                HttpStatus.CREATED
         );
     }
 //    @GetMapping("/movies")
