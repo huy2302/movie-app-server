@@ -1,8 +1,8 @@
 package com.huydevtr.demo.services;
 
-import com.huydevtr.demo.models.entities.Movie;
-import com.huydevtr.demo.models.entities.MovieActor;
+import com.huydevtr.demo.models.entities.*;
 import com.huydevtr.demo.repositories.MovieRepository;
+import com.huydevtr.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +17,10 @@ import java.util.Optional;
 public class MovieService {
     @Autowired
     MovieRepository movieRepository;
+//    @Autowired
+//    FavoriteRepository favoriteRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public Page<Movie> findAll(Pageable pageable) {
         return movieRepository.findAll(pageable);
@@ -44,5 +48,32 @@ public class MovieService {
         }
 //        movieRepository.save(movie);
         return "Save movie successfully!";
+    }
+    public List<Movie> findMoviesByMovieTitle(String movieTitle) {
+        return movieRepository.findMovieByMovieTitle(movieTitle);
+    }
+    public List<Movie> getFavoriteByUserID(int userID) {
+        return movieRepository.findMovieOnFavoriteByUserID(userID);
+    }
+    public int updateFavorite (int movieID, int userID) {
+        Optional<Movie> existingMovie = movieRepository.checkEmptyFavorite(movieID, userID);
+//        Movie movie = movieRepository.findById(movieID).orElse(null);
+//        User user = userRepository.findById(userID).orElse(null);
+
+//        Favorite.FavoriteId favoriteId = new Favorite.FavoriteId();
+//        favoriteId.setMovieID(movieID);
+//        favoriteId.setUserID(userID);
+//
+//        Favorite favorite = new Favorite();
+//        favorite.setId(favoriteId);
+        if (existingMovie.isPresent()) {
+            int res = movieRepository.deleteFavorite(movieID, userID);
+//            favoriteRepository.save(favorite);
+            return res;
+        } else {
+//            favoriteRepository.deleteById(favoriteId);
+            int res = movieRepository.insertFavorite(movieID, userID);
+            return res;
+        }
     }
 }

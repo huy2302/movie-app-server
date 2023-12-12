@@ -22,7 +22,13 @@ public class PersonService {
 //    public List<Actor> findActorByMovieID (int movieID) {
 //        return actorRepository.findAllByMovieMovieID(movieID);
 //    }
-    public List<Actor> actorList(int movieId) {
+    public List<Actor> actorListByMovieID(int movieId) {
         return actorRepository.findActorByNamedParamsNative(movieId);
+    }
+    public Actor getActorDetails(int actorId) {
+        return actorRepository.getById(actorId);
+    }
+    public List<Actor> findActorsByActorName(String actorName) {
+        return actorRepository.findActorByActorNameContainingIgnoreCase(actorName);
     }
 }

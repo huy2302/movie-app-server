@@ -23,8 +23,10 @@ public class Actor {
     private String Gender; // giới tính
     @Column(name = "avt")
     private String Avt; // link avt
+
     @ManyToMany(mappedBy = "actorList", fetch = FetchType.LAZY)
     private List<Movie> movieList;
+
     @Column(name = "description")
     private String Description; // mô tả
 

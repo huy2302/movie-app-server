@@ -23,14 +23,27 @@ public class PersonController {
     PersonService personService;
     @Autowired
     PersonToPersonDTO personToPersonDTO;
-    @GetMapping("/actor/{id}")
+
+
+//    danh sách diễn viên của phim với movieID
+    @GetMapping("/movie/actor/{movieID}")
     public ResponseEntity<List<PersonDTO>> actorList(
-            @PathVariable(value = "id") int id
+            @PathVariable(value = "movieID") int movieID
     ){
-        List<Actor> actors = personService.actorList(id);
+        List<Actor> actors = personService.actorListByMovieID(movieID);
         return new ResponseEntity<>(actors.stream()
                 .map(personToPersonDTO::ActorToPersonDTO)
                 .collect(Collectors.toList()),
+                HttpStatus.OK);
+    }
+//    chi tiết diễn viên
+    @GetMapping("/actor/{actorID}")
+    public ResponseEntity<PersonDTO> actorDetails(
+            @PathVariable(value = "actorID") int actorID
+    ){
+        Actor actor = personService.getActorDetails(actorID);
+        return new ResponseEntity<>(
+                personToPersonDTO.ActorToPersonDTO(actor),
                 HttpStatus.OK);
     }
 

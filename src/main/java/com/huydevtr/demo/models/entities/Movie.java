@@ -26,6 +26,7 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "directorID", referencedColumnName = "directorID")
     )
     private List<Director> directorList;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "movie_actor",
@@ -33,6 +34,7 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "actorID", referencedColumnName = "actorID")
     )
     private List<Actor> actorList;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "movie_writer",
@@ -47,6 +49,10 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "genreID", referencedColumnName = "genreID")
     )
     private List<Genre> genreList;
+
+    @ManyToMany(mappedBy = "favorites", fetch = FetchType.LAZY)
+    private List<User> users;
+
     @Column(name = "released")
     private String released; // ngày ra mắt
     @Column(name = "runtime")

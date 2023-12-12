@@ -21,7 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,19 +53,21 @@ public class MovieController {
     }
     //    get danh sách phim dạng shortMovie
     @GetMapping("/movies")
-    public ResponseEntity<List<ShortMovieDTO>> getAllShortMovie(
+    public ResponseEntity<?> getAllShortMovie(
             @RequestParam(defaultValue = "0") int page
     ) {
         Pageable pageable = PageRequest.of(page, 10);
 
         Page<Movie> movies = movieService.findAll(pageable);
-        List<ShortMovieDTO> productDTOs = movies.stream()
+        List<ShortMovieDTO> listMovie = movies.stream()
                 .map(movieToShortMovieDTO::apply)
                 .collect(Collectors.toList());
-
-        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", listMovie);
+        response.put("metadata", "");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-//    get danh sách thể loại
+    //    get danh sách thể loại
     @GetMapping("/genres")
     public ResponseEntity<List<GenreDTO>> getAllGenre() {
         List<Genre> genres = genreService.findAll();
@@ -84,6 +88,42 @@ public class MovieController {
         return new ResponseEntity<>(
                 abc,
                 HttpStatus.CREATED
+        );
+    }
+    @GetMapping(value = "/favorite/{userID}")
+    public ResponseEntity<?> getFavoritesByUserID(
+            @PathVariable(value = "userID") int userID
+    ) {
+        List<Movie> movies = movieService.getFavoriteByUserID(userID);
+        List<ShortMovieDTO> movieDTOs = movies.stream()
+                .map(movieToShortMovieDTO::apply)
+                .collect(Collectors.toList());
+        Map<String, Object> favorites = new HashMap<>();
+        favorites.put("userID", userID);
+        favorites.put("movies", movieDTOs);
+
+        return new ResponseEntity<>(favorites, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/update-favorite")
+    public ResponseEntity<?> updateFavorite (
+            @RequestParam(name = "movieID") int movieID,
+            @RequestParam(name = "userID") int userID
+    ) {
+        int response = movieService.updateFavorite(movieID, userID);
+        if (response > 0) {
+            Map<String, Object> message = new HashMap<>();
+            message.put("message", "Update successfully!");
+            message.put("status", HttpStatus.OK);
+            message.put("number", response);
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        }
+        return new ResponseEntity<>(
+                "Failed",
+                HttpStatus.BAD_REQUEST
         );
     }
 //    @GetMapping("/movies")
